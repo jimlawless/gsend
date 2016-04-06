@@ -11,26 +11,32 @@ import (
 	"fmt"
 	"log"
 	"net/smtp"
+	"os"
 )
 
 func main() {
 	to := flag.String("t", "", "destination Internet mail address")
-	from := flag.String("f", "", "the sender's GMail address")
-	pwd := flag.String("p", "", "the sender's password")
+	from := flag.String("f", os.Getenv("GSEND_USER"), "the sender's GMail address")
+	pwd := flag.String("p", os.Getenv("GSEND_PWD"), "the sender's password")
 	subject := flag.String("s", "", "subject line of email")
 	msg := flag.String("m", "", "a one-line email message")
 	flag.Usage = func() {
-		fmt.Printf("Syntax:\n\tgsend [flags]\nwhere flags are:\n")
+		fmt.Println("Syntax:\n\tgsend [flags]\nwhere flags are:")
 		flag.PrintDefaults()
+		fmt.Println()
+		fmt.Println("-f and -p may also be set using the environmental variables " +
+			"GSEND_USER and GSEND_PWD respectively.")
 	}
 
 	fmt.Printf("GSend v 1.01 by Jim Lawless\n")
 
 	flag.Parse()
 
-	if flag.NFlag() != 5 {
-		flag.Usage()
-		return
+	for _, s := range [...]*string{to, from, pwd, subject, msg} {
+		if *s == "" {
+			flag.Usage()
+			os.Exit(1)
+		}
 	}
 
 	body := "To: " + *to + "\r\nSubject: " +
