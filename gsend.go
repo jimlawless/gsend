@@ -20,7 +20,7 @@ func main() {
 	subject := flag.String("s", "", "subject line of email")
 	msg := flag.String("m", "", "a one-line email message")
 	flag.Usage = func() {
-		fmt.Printf("Syntax:\n\tGSend [flags]\nwhere flags are:\n")
+		fmt.Printf("Syntax:\n\tgsend [flags]\nwhere flags are:\n")
 		flag.PrintDefaults()
 	}
 
