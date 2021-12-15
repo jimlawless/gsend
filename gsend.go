@@ -1,8 +1,6 @@
 // Copyright 2013 - by Jim Lawless
 // License: MIT / X11
 // See: http://www.mailsend-online.com/license2013.php
-//
-// Bear with me ... I'm a Go noob.
 
 package main
 
